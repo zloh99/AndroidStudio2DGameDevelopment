@@ -36,6 +36,14 @@ public class Player extends Circle {
         //update player position
         positionX += velocityX;
         positionY+= velocityY;
+
+        //update player direction
+        if(velocityX != 0 || velocityY != 0) {
+            //Normalize velocity to get direction (aka find unit vector of velocity)
+            double distance = Utils.getDistanceBetweenPoints(0, 0, velocityX, velocityX);
+            directionX = velocityX/distance;
+            directionY = velocityY/distance;
+        }
     }
 
     public void setPosition(double positionX, double positionY) {

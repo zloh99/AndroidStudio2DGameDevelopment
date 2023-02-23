@@ -4,6 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import com.example.androidstudio2dgamedevelopment.object.Utils;
+
 public class Joystick {
 
     private Paint innerCirclePaint;
@@ -72,9 +74,11 @@ public class Joystick {
 
     public boolean isPressed(double touchPositionX, double touchPositionY) {
 
-        joystickCenterToTouchDistance = Math.sqrt( //sqrt(c^2) = sqrt(a^2 + b^2) to get straight line from touch to center of outer circle
-                Math.pow(outerCircleCenterPositionX - touchPositionX, 2) +
-                        Math.pow(outerCircleCenterPositionY - touchPositionY, 2)
+        joystickCenterToTouchDistance = Utils.getDistanceBetweenPoints(
+                outerCircleCenterPositionX,
+                outerCircleCenterPositionY,
+                touchPositionX,
+                touchPositionY
         );
         //return a boolean based on whether a user has touched
         // anywhere inside the outer circle of the joystick
@@ -93,9 +97,7 @@ public class Joystick {
         //values of 0 to 1, 0: not pulling the joystick, 1: pulling as far as we can
         double deltaX = touchPositionX - outerCircleCenterPositionX;
         double deltaY = touchPositionY - outerCircleCenterPositionY;
-        double deltaDistance = Math.sqrt( //relative distance of 'pull'
-                Math.pow(deltaX, 2) + Math.pow(deltaY, 2)
-        );
+        double deltaDistance = Utils.getDistanceBetweenPoints(0, 0, deltaX, deltaY);
 
         if(deltaDistance < outerCircleRadius){
             actuatorX = deltaX/outerCircleRadius; //how far we have pulled the joystick divided by distance from center of joystick to the border
