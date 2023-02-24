@@ -1,4 +1,4 @@
-package com.example.androidstudio2dgamedevelopment.object;
+package com.example.androidstudio2dgamedevelopment.gameobject;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,7 +7,9 @@ import android.graphics.Paint;
 import androidx.core.content.ContextCompat;
 
 import com.example.androidstudio2dgamedevelopment.GameLoop;
-import com.example.androidstudio2dgamedevelopment.Joystick;
+import com.example.androidstudio2dgamedevelopment.Utils;
+import com.example.androidstudio2dgamedevelopment.gamepanel.HealthBar;
+import com.example.androidstudio2dgamedevelopment.gamepanel.Joystick;
 import com.example.androidstudio2dgamedevelopment.R;
 
 /**

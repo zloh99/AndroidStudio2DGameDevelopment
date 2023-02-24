@@ -1,4 +1,4 @@
-package com.example.androidstudio2dgamedevelopment.object;
+package com.example.androidstudio2dgamedevelopment.gameobject;
 
 import android.graphics.Canvas;
 
@@ -24,13 +24,13 @@ public abstract class GameObject {
 
     public abstract void update();
 
-    protected double getPositionX() { return positionX;
+    public double getPositionX() { return positionX;
     }
 
-    protected double getPositionY() { return positionY;
+    public double getPositionY() { return positionY;
     }
 
-    protected static double getDistanceBetweenObjects(GameObject obj1, GameObject obj2) {
+    public static double getDistanceBetweenObjects(GameObject obj1, GameObject obj2) {
         //Find absolute distance using pythagoreas theorem
         return Math.sqrt(
                 Math.pow(obj2.getPositionX() - obj1.getPositionX(), 2) +
@@ -38,11 +38,11 @@ public abstract class GameObject {
         );
     }
 
-    protected double getDirectionX() {
+    public double getDirectionX() {
         return directionX;
     }
 
-    protected double getDirectionY() {
+    public double getDirectionY() {
         return directionY;
     }
 }
