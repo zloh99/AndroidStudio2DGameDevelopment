@@ -7,13 +7,11 @@ import android.graphics.Canvas;
  * world objects in the game.
  */
 public abstract class GameObject {
-    protected double positionX;
-    protected double positionY;
-    protected double velocityX;
-    protected double velocityY;
-    protected double directionX = 1;
+    protected double positionX, positionY = 0.0;
+    protected double velocityX, velocityY = 0.0;
+    protected double directionX = 1.0;
 
-    protected double directionY = 0;
+    protected double directionY = 0.0;
 
     public GameObject(double positionX, double positionY) {
         this.positionX = positionX;

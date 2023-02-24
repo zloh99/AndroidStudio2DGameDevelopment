@@ -158,13 +158,14 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
             enemy.update();
         }
 
-        //Iterate through enemyList and check for collision between each enemy and the player and all spells
+        //Iterate through enemyList and check for collision between each enemy and the player and all spells in spellist
         Iterator<Enemy> iteratorEnemy = enemyList.iterator();
         while (iteratorEnemy.hasNext()) {
             Circle enemy = iteratorEnemy.next();
             if (Circle.isColliding(enemy, player)) {
-                //Remove enemy if it is colliding with player
+                //Remove enemy if it is colliding with player, and deduct health
                 iteratorEnemy.remove();
+                player.setHealthPoints(player.getHealthPoints() - 1);
                 continue;
             }
 

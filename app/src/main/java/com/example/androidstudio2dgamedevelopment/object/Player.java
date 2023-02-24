@@ -1,6 +1,7 @@
 package com.example.androidstudio2dgamedevelopment.object;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import androidx.core.content.ContextCompat;
@@ -17,8 +18,19 @@ import com.example.androidstudio2dgamedevelopment.R;
 public class Player extends Circle {
     public static final double SPEED_PIXELS_PER_SECOND = 400.0;
     public static final double MAX_SPEED = SPEED_PIXELS_PER_SECOND / GameLoop.MAX_UPS; //pixels/s divided by updates/s = pixels/update
+    public static final int MAX_HEALTH_POINTS = 10;
     private final Joystick joystick;
+    private HealthBar healthBar;
+    private int healthPoints;
 
+    /**
+     * Constructor for player class
+     * @param context
+     * @param joystick
+     * @param positionX
+     * @param positionY
+     * @param radius
+     */
     public Player(Context context, Joystick joystick, double positionX, double positionY, double radius) {
         super(context, ContextCompat.getColor(context, R.color.player), positionX, positionY, radius);
         this.joystick = joystick;
@@ -26,6 +38,9 @@ public class Player extends Circle {
         paint = new Paint();
         int color = ContextCompat.getColor(context, R.color.player);
         paint.setColor(color);
+
+        this.healthBar = new HealthBar(context,this);
+        this.healthPoints = MAX_HEALTH_POINTS;
     }
 
     public void update() {
@@ -46,8 +61,24 @@ public class Player extends Circle {
         }
     }
 
+    public void draw(Canvas canvas) {
+        //override draw method to draw a health bar
+        super.draw(canvas);
+        healthBar.draw(canvas);
+    }
+
     public void setPosition(double positionX, double positionY) {
         this.positionX = positionX;
         this.positionY = positionY;
+    }
+
+    public int getHealthPoints() {
+        return healthPoints;
+    }
+
+    public void setHealthPoints(int healthPoints) {
+        if(healthPoints >= 0){
+            this.healthPoints = healthPoints;
+        }
     }
 }
