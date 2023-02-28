@@ -3,6 +3,7 @@ package com.example.androidstudio2dgamedevelopment;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -100,17 +101,23 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        Log.d("Game.java", "surfaceCreated()"); //put message in logcat
+        if (gameLoop.getState().equals(Thread.State.TERMINATED)) { //check state of thread to see if it is terminated
+            gameLoop = new GameLoop(this, holder);
+            //then we instantiate a new gameLoop object, because a thread object can only be run once until it is destroyed,
+            // so if we wanna run it again we have to create a new one
+        }
         gameLoop.startLoop();
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
+        Log.d("Game.java", "surfaceChanged()");
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
+        Log.d("Game.java", "surfaceDestroyed()");
     }
 
     @Override
@@ -190,5 +197,10 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         for (Spell spell: spellList) {
             spell.update();
         }
+    }
+
+    public void pause() {
+        //pause game loop
+        gameLoop.stopLoop();
     }
 }
