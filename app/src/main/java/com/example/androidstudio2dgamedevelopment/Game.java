@@ -1,8 +1,10 @@
 package com.example.androidstudio2dgamedevelopment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -37,6 +39,7 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private int numberOfSpellsToCast = 0;
     private GameOver gameOver;
     private Performance performance;
+    private GameDisplay gameDisplay;
 
     public Game(Context context) {
         super(context);
@@ -54,6 +57,11 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         //Initialise game objects
         player = new Player(context, joystick, 2*500, 500, 32);
+
+        //Initialise game display and center it around the player
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        gameDisplay = new GameDisplay(displayMetrics.widthPixels, displayMetrics.heightPixels, player);
 
         setFocusable(true);
     }
@@ -125,13 +133,13 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
 
         //Draw game objects
-        player.draw(canvas);
+        player.draw(canvas, gameDisplay);
 
         for (Enemy enemy: enemyList) {
-            enemy.draw(canvas);
+            enemy.draw(canvas, gameDisplay);
         }
         for (Spell spell: spellList) {
-            spell.draw(canvas);
+            spell.draw(canvas, gameDisplay);
         }
 
         //Draw game panels
@@ -197,6 +205,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         for (Spell spell: spellList) {
             spell.update();
         }
+
+        gameDisplay.update();
     }
 
     public void pause() {

@@ -6,6 +6,7 @@ import android.graphics.Paint;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.androidstudio2dgamedevelopment.GameDisplay;
 import com.example.androidstudio2dgamedevelopment.R;
 import com.example.androidstudio2dgamedevelopment.gameobject.Player;
 
@@ -37,7 +38,7 @@ public class HealthBar {
         healthPaint.setColor(healthColor);
     }
 
-    public void draw(Canvas canvas) {
+    public void draw(Canvas canvas, GameDisplay gameDisplay) {
         float x = (float) player.getPositionX(); //getPosition method returns double but we convert result to a float since draw method takes in floats
         float y = (float) player.getPositionY();
         float distanceToPlayer = 30; //distance of healthbar to player in pixels
@@ -49,7 +50,12 @@ public class HealthBar {
         borderRight = x + width/2;
         borderBottom = y - distanceToPlayer; //topmost y coordinate starts from 0
         borderTop = borderBottom - height;
-        canvas.drawRect(borderLeft, borderTop, borderRight, borderBottom, borderPaint); //draw a rectangle that takes in 5 arguments
+        canvas.drawRect(
+                (float) gameDisplay.gameToDisplayCoordinatesX(borderLeft),
+                (float) gameDisplay.gameToDisplayCoordinatesY(borderTop),
+                (float) gameDisplay.gameToDisplayCoordinatesX(borderRight),
+                (float) gameDisplay.gameToDisplayCoordinatesY(borderBottom),
+                borderPaint); //draw a rectangle that takes in 5 arguments
 
         //Draw health meter
         float healthLeft, healthTop, healthRight, healthBottom, healthWidth, healthHeight;
@@ -60,6 +66,11 @@ public class HealthBar {
         healthBottom = borderBottom - margin;
         healthTop = healthBottom - healthHeight;
 
-        canvas.drawRect(healthLeft, healthTop, healthRight, healthBottom, healthPaint);
+        canvas.drawRect(
+                (float) gameDisplay.gameToDisplayCoordinatesX(healthLeft),
+                (float) gameDisplay.gameToDisplayCoordinatesY(healthTop),
+                (float) gameDisplay.gameToDisplayCoordinatesX(healthRight),
+                (float) gameDisplay.gameToDisplayCoordinatesY(healthBottom),
+                healthPaint);
     }
 }

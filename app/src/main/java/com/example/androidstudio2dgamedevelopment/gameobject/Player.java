@@ -6,6 +6,7 @@ import android.graphics.Paint;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.androidstudio2dgamedevelopment.GameDisplay;
 import com.example.androidstudio2dgamedevelopment.GameLoop;
 import com.example.androidstudio2dgamedevelopment.Utils;
 import com.example.androidstudio2dgamedevelopment.gamepanel.HealthBar;
@@ -63,10 +64,10 @@ public class Player extends Circle {
         }
     }
 
-    public void draw(Canvas canvas) {
+    public void draw(Canvas canvas, GameDisplay gameDisplay) {
         //override draw method to draw a health bar
-        super.draw(canvas);
-        healthBar.draw(canvas);
+        super.draw(canvas, gameDisplay);
+        healthBar.draw(canvas, gameDisplay);
     }
 
     public void setPosition(double positionX, double positionY) {
