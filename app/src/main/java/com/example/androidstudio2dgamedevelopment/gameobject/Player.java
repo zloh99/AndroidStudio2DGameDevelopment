@@ -12,6 +12,8 @@ import com.example.androidstudio2dgamedevelopment.Utils;
 import com.example.androidstudio2dgamedevelopment.gamepanel.HealthBar;
 import com.example.androidstudio2dgamedevelopment.gamepanel.Joystick;
 import com.example.androidstudio2dgamedevelopment.R;
+import com.example.androidstudio2dgamedevelopment.gamepanel.Performance;
+import com.example.androidstudio2dgamedevelopment.graphics.Sprite;
 
 /**
  * Player is a character in the game controllable by the player with a joystick
@@ -25,6 +27,7 @@ public class Player extends Circle {
     private final Joystick joystick;
     private HealthBar healthBar;
     private int healthPoints;
+    private Sprite sprite;
 
     /**
      * Constructor for player class
@@ -34,10 +37,11 @@ public class Player extends Circle {
      * @param positionY
      * @param radius
      */
-    public Player(Context context, Joystick joystick, double positionX, double positionY, double radius) {
+    public Player(Context context, Joystick joystick, double positionX, double positionY, double radius, Sprite sprite) {
         super(context, ContextCompat.getColor(context, R.color.player), positionX, positionY, radius);
         this.joystick = joystick;
         this.radius = radius;
+        this.sprite = sprite;
         paint = new Paint();
         int color = ContextCompat.getColor(context, R.color.player);
         paint.setColor(color);
@@ -66,7 +70,11 @@ public class Player extends Circle {
 
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
         //override draw method to draw a health bar
-        super.draw(canvas, gameDisplay);
+        sprite.draw(
+                canvas,
+                (int) gameDisplay.gameToDisplayCoordinatesX(getPositionX()) - sprite.getWidth()/2,
+                (int) gameDisplay.gameToDisplayCoordinatesY(getPositionY()) - sprite.getHeight()/2
+        );
         healthBar.draw(canvas, gameDisplay);
     }
 
