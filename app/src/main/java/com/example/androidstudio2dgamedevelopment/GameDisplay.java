@@ -1,6 +1,7 @@
 package com.example.androidstudio2dgamedevelopment;
 
 import com.example.androidstudio2dgamedevelopment.gameobject.GameObject;
+import com.example.androidstudio2dgamedevelopment.gameobject.Player;
 
 public class GameDisplay {
     private double gameToDisplayCoordinateOffsetX;

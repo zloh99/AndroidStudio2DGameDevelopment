@@ -19,6 +19,7 @@ import com.example.androidstudio2dgamedevelopment.gameobject.Spell;
 import com.example.androidstudio2dgamedevelopment.gamepanel.GameOver;
 import com.example.androidstudio2dgamedevelopment.gamepanel.Joystick;
 import com.example.androidstudio2dgamedevelopment.gamepanel.Performance;
+import com.example.androidstudio2dgamedevelopment.graphics.Animator;
 import com.example.androidstudio2dgamedevelopment.graphics.SpriteSheet;
 
 import java.util.ArrayList;
@@ -58,7 +59,8 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         //Initialise game objects
         SpriteSheet spriteSheet = new SpriteSheet(context);
-        player = new Player(context, joystick, 2*500, 500, 32, spriteSheet.getPlayerSprite());
+        Animator animator = new Animator(spriteSheet.getPlayerSpriteArray());
+        player = new Player(context, joystick, 2*500, 500, 32, animator);
 
         //Initialise game display and center it around the player
         DisplayMetrics displayMetrics = new DisplayMetrics();

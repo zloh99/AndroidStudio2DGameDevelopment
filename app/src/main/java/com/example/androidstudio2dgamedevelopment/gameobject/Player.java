@@ -13,6 +13,7 @@ import com.example.androidstudio2dgamedevelopment.gamepanel.HealthBar;
 import com.example.androidstudio2dgamedevelopment.gamepanel.Joystick;
 import com.example.androidstudio2dgamedevelopment.R;
 import com.example.androidstudio2dgamedevelopment.gamepanel.Performance;
+import com.example.androidstudio2dgamedevelopment.graphics.Animator;
 import com.example.androidstudio2dgamedevelopment.graphics.Sprite;
 
 /**
@@ -27,7 +28,8 @@ public class Player extends Circle {
     private final Joystick joystick;
     private HealthBar healthBar;
     private int healthPoints;
-    private Sprite sprite;
+    private Animator animator;
+    private PlayerState playerState;
 
     /**
      * Constructor for player class
@@ -37,11 +39,12 @@ public class Player extends Circle {
      * @param positionY
      * @param radius
      */
-    public Player(Context context, Joystick joystick, double positionX, double positionY, double radius, Sprite sprite) {
+    public Player(Context context, Joystick joystick, double positionX, double positionY, double radius, Animator animator) {
         super(context, ContextCompat.getColor(context, R.color.player), positionX, positionY, radius);
         this.joystick = joystick;
         this.radius = radius;
-        this.sprite = sprite;
+        this.animator = animator;
+        this.playerState = new PlayerState(this);
         paint = new Paint();
         int color = ContextCompat.getColor(context, R.color.player);
         paint.setColor(color);
@@ -66,15 +69,14 @@ public class Player extends Circle {
             directionX = velocityX/distance;
             directionY = velocityY/distance;
         }
+
+        playerState.update();
     }
 
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
+        animator.draw(canvas, gameDisplay, this);
+
         //override draw method to draw a health bar
-        sprite.draw(
-                canvas,
-                (int) gameDisplay.gameToDisplayCoordinatesX(getPositionX()) - sprite.getWidth()/2,
-                (int) gameDisplay.gameToDisplayCoordinatesY(getPositionY()) - sprite.getHeight()/2
-        );
         healthBar.draw(canvas, gameDisplay);
     }
 
@@ -91,5 +93,9 @@ public class Player extends Circle {
         if(healthPoints >= 0){
             this.healthPoints = healthPoints;
         }
+    }
+
+    public PlayerState getPlayerState() {
+        return playerState;
     }
 }
