@@ -12,6 +12,8 @@ import com.example.androidstudio2dgamedevelopment.R;
  * The sprite object is then returned to the Player object, which then draws it to the screen
  */
 public class SpriteSheet {
+    private static final int SPRITE_WIDTH_PIXELS = 64;
+    private static final int SPRITE_HEIGHT_PIXELS = 64;
     //bitmap = 2d array of pixels, with each pixel having 3 values: R, G, and B
     private Bitmap bitmap;
 
@@ -31,5 +33,33 @@ public class SpriteSheet {
 
     public Bitmap getBitmap() {
         return bitmap;
+    }
+
+    private Sprite getSpriteByIndex(int idxRow, int idxCol) {
+        return new Sprite(this, new Rect(
+                idxCol*SPRITE_WIDTH_PIXELS,
+                idxRow*SPRITE_HEIGHT_PIXELS,
+                (idxCol + 1)*SPRITE_WIDTH_PIXELS,
+                (idxRow + 1)*SPRITE_HEIGHT_PIXELS
+        ));
+    }
+
+    public Sprite getWaterSprite() {
+        return getSpriteByIndex(1, 0);
+    }
+
+    public Sprite getLavaSprite() {
+        return getSpriteByIndex(1, 1);
+    }
+    public Sprite getGroundSprite() {
+        return getSpriteByIndex(1, 2);
+    }
+
+    public Sprite getGrassSprite() {
+        return getSpriteByIndex(1, 3);
+    }
+
+    public Sprite getTreeSprite() {
+        return getSpriteByIndex(1, 4);
     }
 }

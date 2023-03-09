@@ -21,6 +21,7 @@ import com.example.androidstudio2dgamedevelopment.gamepanel.Joystick;
 import com.example.androidstudio2dgamedevelopment.gamepanel.Performance;
 import com.example.androidstudio2dgamedevelopment.graphics.Animator;
 import com.example.androidstudio2dgamedevelopment.graphics.SpriteSheet;
+import com.example.androidstudio2dgamedevelopment.map.Tilemap;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,6 +34,7 @@ import java.util.List;
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final Player player;
     private final Joystick joystick;
+    private final Tilemap tilemap;
     //private final Enemy enemy;
     private GameLoop gameLoop;
     private List<Enemy> enemyList = new ArrayList<Enemy>(); //array list of type Enemy
@@ -66,6 +68,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         gameDisplay = new GameDisplay(displayMetrics.widthPixels, displayMetrics.heightPixels, player);
+
+        //Initialise Tilemap
+        tilemap = new Tilemap(spriteSheet);
 
         setFocusable(true);
     }
@@ -135,6 +140,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+
+        //Draw Tilemap (comes before everything else since all tiles are drawn under all other game objects)
+        tilemap.draw(canvas, gameDisplay);
 
         //Draw game objects
         player.draw(canvas, gameDisplay);
